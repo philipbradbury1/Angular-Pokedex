@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Gen } from 'src/app/_model/gen';
 import { Pokemon } from 'src/app/_model/pokemon';
 import { PokemonList } from 'src/app/_model/pokemonList';
@@ -14,27 +15,29 @@ import { PokemonService } from 'src/app/_services/pokemon.service';
 })
 export class ScreenComponent implements OnInit {
 
+  gens$?: Observable<Gen[]>;
   pokemonList$?: Observable<PokemonList[]>;
-  gens$: Observable<Gen[]>;
-  pokemon$?: Observable<Pokemon>;
+  pokemon$?: Observable<Pokemon | null>;
+  pokemonSelected:boolean = false;
 
-  constructor(private pokemonService: PokemonService, private genService: GensService) {
+  constructor(public pokemonService: PokemonService, private genService: GensService) {}
+
+  ngOnInit(): void {
+
     this.gens$ = this.genService.getGens();
-   }
+    console.log(this.pokemonService.pokemonList$);
 
-  ngOnInit(): void {}
-
+    this.pokemon$ = this.pokemonService.pokemonList$
+    .pipe(pokemonList => this.pokemon$ = pokemonList);
+  }
 
   getPokemonByName(name: string){
-    this.pokemon$ = this.pokemonService.getPokemonByName(name);
+    this.pokemonService.getPokemonByName(name).subscribe();
+    this.pokemonSelected = true;
   }
 
   getPokemonByGen(gen: Gen){
-    this.pokemonList$ = this.pokemonService.getPokemonLimit(gen.limit, gen.offset);
-  }
-
-  backToGen(){
-    this.pokemonList$ = undefined;
+    this.pokemonList$ = this.pokemonService.getPokemonList(gen.limit, gen.offset);
   }
 
 }

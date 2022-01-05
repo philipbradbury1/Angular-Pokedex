@@ -1,0 +1,13 @@
+<div id="types-container">
+  <div id="type-box" style="border-right: none">
+    <ng-container *ngIf="pokemon2$ | async as pokemon">
+      <span [ngClass]="getClassByType(pokemon.types[0]?.type?.name)">{{pokemon.types[0]?.type?.name}}</span>
+    </ng-container>
+
+  </div>
+  <div id="type-box">
+    <ng-container *ngIf="pokemon2$ | async as pokemon">
+      <span [ngClass]="getClassByType(pokemon.types[1]?.type?.name)" >{{pokemon.types[1]?.type?.name}}</span>
+    </ng-container>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { PokemonList } from '../_model/pokemonList';
 import { PokemonResults } from '../_model/pokemonResults';
 import { Pokemon } from '../_model/pokemon';
@@ -13,18 +13,21 @@ import { Pokemon } from '../_model/pokemon';
 export class PokemonService {
   baseUrl = environment.apiUrl;
 
+  private pokemonListSubject = new BehaviorSubject<Pokemon | null>(null);
+  pokemonList$: Observable<Pokemon | null> = this.pokemonListSubject.asObservable();
+
   constructor(private http: HttpClient) { }
 
-
-  getPokemonByName(name:string): Observable<Pokemon>{
-    console.log(name);
-    return this.http.get<Pokemon>( this.baseUrl + 'pokemon/' + name)
-      .pipe(
-        tap(value => console.log('Count: ', value) )
-      )
+  getPokemonByName(name:string){
+    return this.http.get<Pokemon | null>( this.baseUrl + 'pokemon/' + name)
+    .pipe(
+      tap(value => {
+        this.pokemonListSubject.next(value)
+      })
+    );
   }
 
-  getPokemonLimit(limit:number, offset:number): Observable<PokemonList[]>{
+  getPokemonList(limit:number, offset:number): Observable<PokemonList[]>{
     return this.http.get<PokemonResults>(this.baseUrl + `pokemon/?limit= ${limit}&offset=${offset}`)
       .pipe(
         map( (res) => res['results'])

@@ -40,9 +40,7 @@
     </div>
     <div id="name-row">
       <div id="name-container">
-        <div id="name-screen">
-          Ditto
-        </div>
+        <app-name-panel></app-name-panel>
         <div id="buttons-container">
           <div id="button-red" onclick="clickNormalColor()">
             <div id="light-button-red" class="light on"></div>
@@ -74,9 +72,9 @@
     </div>
   </div>
     <div id="pokedex-right">
-      <div id="screen-description-row">
-        <div id="screen-description"></div>
-      </div>
+
+        <app-description></app-description>
+
       <div id="numbers-buttons-row">
         <div id="button-0" onclick="clickNumber('0')" class="number-button">0</div>
         <div id="button-1" onclick="clickNumber('1')" class="number-button">1</div>
@@ -94,20 +92,10 @@
         <div id="deco-button"></div>
       </div>
       <div id="types-row">
-        <div id="types-container">
-          <div id="type-box" style="border-right: none">
-            <img id="type1" class="type-pokemon" src="">
-          </div>
-          <div id="type-box">
-            <img id="type2" class="type-pokemon" src="">
-          </div>
-        </div>
+        <app-type-panel></app-type-panel>
         <div id="deco-light"></div>
       </div>
-      <div id="extra-info-pokemon-row">
-        <div class="extra-info-screen" id="extra-info-screen-1">Height: 7</div>
-        <div class="extra-info-screen" id="extra-info-screen-2">Weight: 69</div>
-      </div>
+        <app-details-panel></app-details-panel>
     </div>
     <svg id="mid-cilinder" width="54" height="456" viewBox="0 0 54 456" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g filter="url(#filter0_d_250_2)">

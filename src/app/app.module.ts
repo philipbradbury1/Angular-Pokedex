@@ -5,12 +5,20 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { ScreenComponent } from './pokedex/screen/screen.component';
+import { DescriptionComponent } from './pokedex/description/description.component';
+import { TypePanelComponent } from './pokedex/type-panel/type-panel.component';
+import { DetailsPanelComponent } from './pokedex/details-panel/details-panel.component';
+import { NamePanelComponent } from './pokedex/name-panel/name-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokedexComponent,
-    ScreenComponent
+    ScreenComponent,
+    DescriptionComponent,
+    TypePanelComponent,
+    DetailsPanelComponent,
+    NamePanelComponent
   ],
   imports: [
     BrowserModule,
