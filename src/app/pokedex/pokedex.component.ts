@@ -13,27 +13,10 @@ import { PokemonList } from '../_model/pokemonList';
   encapsulation: ViewEncapsulation.None
 })
 export class PokedexComponent implements OnInit {
- // pokemonList$?: Observable<PokemonList[]>;
- // gens$: Observable<Gen[]>;
- // pokemon$?: Observable<Pokemon>;
 
-  constructor(private pokemonService: PokemonService, private genService: GensService) {
-   // this.gens$ = this.genService.getGens();
-   }
+
+  constructor(private pokemonService: PokemonService, private genService: GensService) { }
 
   ngOnInit(): void {}
 
-/*
-  getPokemonByName(name: string){
-    this.pokemon$ = this.pokemonService.getPokemonByName(name);
-  }
-
-  getPokemonByGen(gen: Gen){
-    this.pokemonList$ = this.pokemonService.getPokemonLimit(gen.limit, gen.offset);
-  }
-
-  backToGen(){
-    this.pokemonList$ = undefined;
-  }
-*/
 }

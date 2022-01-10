@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { PokemonList } from '../_model/pokemonList';
 import { PokemonResults } from '../_model/pokemonResults';
-import { Pokemon } from '../_model/pokemon';
+import { Description, Pokemon } from '../_model/pokemon';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,41 @@ import { Pokemon } from '../_model/pokemon';
 export class PokemonService {
   baseUrl = environment.apiUrl;
 
-  private pokemonListSubject = new BehaviorSubject<Pokemon | null>(null);
-  pokemonList$: Observable<Pokemon | null> = this.pokemonListSubject.asObservable();
+  private pokemonListSubject = new BehaviorSubject<any>(null);
+  pokemonList$: Observable<any> = this.pokemonListSubject.asObservable();
+
+  pokemonSelected:boolean = false;
+  pokemonGenSelected:boolean = false
 
   constructor(private http: HttpClient) { }
 
-  getPokemonByName(name:string){
-    return this.http.get<Pokemon | null>( this.baseUrl + 'pokemon/' + name)
+  getPokemonByName(name:string| number){
+   return this.http.get<Pokemon>( this.baseUrl + 'pokemon/' + name)
     .pipe(
-      tap(value => {
-        this.pokemonListSubject.next(value)
+      mergeMap(pokemon => {
+        const pokemonDetails = of(pokemon);
+        const description = this.http.get<Description>(pokemon.species.url);
+        return forkJoin([pokemonDetails, description]).pipe(
+          map(([pokemonDetails, description]) => {
+            if(pokemonDetails != null ){
+              pokemonDetails.id = ('00' + pokemonDetails.id).slice(-3);
+              description.id = ('00' + description.id).slice(-3);
+              pokemonDetails.height = pokemonDetails.height / 10;
+              pokemonDetails.weight = pokemonDetails.weight / 10;
+            }
+            return Object.assign(pokemonDetails, description);
+          })
+        )
+      }),
+      tap((value) => {
+          this.pokemonListSubject.next(value)
       })
     );
+  }
+
+
+  setToNull(){
+    this.pokemonListSubject.next(null)
   }
 
   getPokemonList(limit:number, offset:number): Observable<PokemonList[]>{
@@ -35,3 +58,6 @@ export class PokemonService {
   }
 
 }
+
+
+

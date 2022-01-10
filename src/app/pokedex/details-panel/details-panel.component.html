@@ -1,4 +1,4 @@
 <div id="extra-info-pokemon-row">
-  <div class="extra-info-screen" id="extra-info-screen-1">Height: <span *ngIf="pokemon2$ | async as pokemon">{{pokemon.height}}</span></div>
-  <div class="extra-info-screen" id="extra-info-screen-2">Weight: <span *ngIf="pokemon2$ | async as pokemon">{{pokemon.weight}}</span></div>
+  <div class="extra-info-screen" id="extra-info-screen-1"> <span *ngIf="pokemon2$ | async as pokemon">Height: {{pokemon.height}} m</span></div>
+  <div class="extra-info-screen" id="extra-info-screen-2"> <span *ngIf="pokemon2$ | async as pokemon">Weight: {{pokemon.weight}} kg</span></div>
 </div>

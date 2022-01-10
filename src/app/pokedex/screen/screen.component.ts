@@ -18,7 +18,7 @@ export class ScreenComponent implements OnInit {
   gens$?: Observable<Gen[]>;
   pokemonList$?: Observable<PokemonList[]>;
   pokemon$?: Observable<Pokemon | null>;
-  pokemonSelected:boolean = false;
+
 
   constructor(public pokemonService: PokemonService, private genService: GensService) {}
 
@@ -33,11 +33,12 @@ export class ScreenComponent implements OnInit {
 
   getPokemonByName(name: string){
     this.pokemonService.getPokemonByName(name).subscribe();
-    this.pokemonSelected = true;
+    this.pokemonService.pokemonSelected = true;
   }
 
   getPokemonByGen(gen: Gen){
     this.pokemonList$ = this.pokemonService.getPokemonList(gen.limit, gen.offset);
+    this.pokemonService.pokemonGenSelected = true;
   }
 
 }

@@ -21,21 +21,8 @@
           <div id="circle3" style="margin-right: 20px"></div>
           <div id="circle3" style="margin-left: 20px"></div>
         </div>
-
         <app-screen></app-screen>
-
-        <div id="bottom-screen-decoration">
-          <div id="circle4"></div>
-          <div id="menu-button">
-            <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line y1="0.5" x2="22" y2="0.5" stroke="black"/>
-              <line y1="15.5" x2="22" y2="15.5" stroke="black"/>
-              <line y1="10.5" x2="22" y2="10.5" stroke="black"/>
-              <line y1="5.5" x2="22" y2="5.5" stroke="black"/>
-            </svg>
-
-          </div>
-        </div>
+        <app-bottom-screen></app-bottom-screen>
       </div>
     </div>
     <div id="name-row">
@@ -50,23 +37,7 @@
           </div>
         </div>
         <div id="arrows-container">
-          <div id="cross">
-        <div id="leftcross" onclick="clickLeftRight()">
-          <div id="leftT"></div>
-        </div>
-        <div id="topcross" onclick="clickUp()">
-          <div id="upT"></div>
-        </div>
-        <div id="rightcross" onclick="clickLeftRight()">
-          <div id="rightT"></div>
-        </div>
-        <div id="midcross">
-          <div id="midCircle"></div>
-        </div>
-        <div id="botcross" onclick="clickBottom()">
-          <div id="downT"></div>
-        </div>
-      </div>
+          <app-d-pad></app-d-pad>
         </div>
       </div>
     </div>
@@ -92,7 +63,7 @@
         <div id="deco-button"></div>
       </div>
       <div id="types-row">
-        <app-type-panel></app-type-panel>
+       <!-- <app-type-panel></app-type-panel> -->
         <div id="deco-light"></div>
       </div>
         <app-details-panel></app-details-panel>

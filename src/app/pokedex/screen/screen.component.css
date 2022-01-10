@@ -16,5 +16,10 @@ ul{
   margin: 0;
   font-size: 24px;
   cursor: pointer;
+  text-transform: capitalize;
 
+}
+
+li:hover{
+  background-color: #010101;
 }
