@@ -22,9 +22,7 @@ export class DPadComponent implements OnInit {
   clickLeft(){
 
     let pokemonID = parseInt(this.pokemon$.id)
-
     if(pokemonID > 1){
-
       pokemonID--
 
       if(this.pokemonService.pokemonSelected){
@@ -32,24 +30,16 @@ export class DPadComponent implements OnInit {
       }
 
     }
-
-
   }
 
   clickRight(){
 
-    let pokemonID = parseInt(this.pokemon$.id)
-
-
-
-      pokemonID++
-
       if(this.pokemonService.pokemonSelected){
+
+        let pokemonID = parseInt(this.pokemon$.id)
+        pokemonID++
         this.pokemonService.getPokemonByName(pokemonID).subscribe();
       }
-
-
-
   }
 
 }
