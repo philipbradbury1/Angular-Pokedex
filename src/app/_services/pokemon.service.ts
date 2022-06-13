@@ -40,6 +40,7 @@ export class PokemonService {
         )
       }),
       tap((value) => {
+        console.log(value)
           this.pokemonListSubject.next(value)
       })
     );

@@ -1,5 +1,13 @@
 <div id="screen-description-row">
   <div id="screen-description" >
-    <span *ngIf="pokemon2$ | async as pokemon">{{pokemon.flavor_text_entries[0].flavor_text}}</span>
+
+    <div *ngIf="pokemon2$ | async as pokemon; else search_instructions">
+      <span >
+         {{pokemon}}
+      </span>
+    </div>
+
+    <ng-template #search_instructions>Search for pokemon by ID...</ng-template>
+
   </div>
 </div>

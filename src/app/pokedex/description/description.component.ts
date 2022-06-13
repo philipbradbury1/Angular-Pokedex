@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Pokemon } from 'src/app/_model/pokemon';
 import { PokemonService } from 'src/app/_services/pokemon.service';
 
@@ -15,9 +16,21 @@ export class DescriptionComponent implements OnInit {
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit(): void {
+
     this.pokemon2$ = this.pokemonService.pokemonList$
-    .pipe(pokemonList=> this.pokemon2$ = pokemonList);
+    .pipe(
+      map(item =>{
+        if(item){
+          for (let flavor of item.flavor_text_entries){
+            if(flavor.language.name == 'en'){
+              return flavor.flavor_text;
+            }
+          }
+      }
+      }),
+    )
+
   }
 
-
 }
+

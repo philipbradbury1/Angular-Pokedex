@@ -31,4 +31,5 @@ export interface Species {
 
 export interface TextEntries {
   flavor_text: string | undefined,
+  language: {name: string},
 }
