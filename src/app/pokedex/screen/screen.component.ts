@@ -19,7 +19,6 @@ export class ScreenComponent implements OnInit {
   pokemonList$?: Observable<PokemonList[]>;
   pokemon$?: Observable<Pokemon | null>;
 
-
   constructor(public pokemonService: PokemonService, private genService: GensService) {}
 
   ngOnInit(): void {
@@ -39,6 +38,10 @@ export class ScreenComponent implements OnInit {
   getPokemonByGen(gen: Gen){
     this.pokemonList$ = this.pokemonService.getPokemonList(gen.limit, gen.offset);
     this.pokemonService.pokemonGenSelected = true;
+  }
+
+  get pokemonShowBack(): boolean{
+    return this.pokemonService.pokemonBack
   }
 
 }

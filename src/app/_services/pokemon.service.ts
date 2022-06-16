@@ -17,7 +17,8 @@ export class PokemonService {
   pokemonList$: Observable<any> = this.pokemonListSubject.asObservable();
 
   pokemonSelected:boolean = false;
-  pokemonGenSelected:boolean = false
+  pokemonGenSelected:boolean = false;
+  pokemonBack: boolean = false;
 
   constructor(private http: HttpClient) { }
 

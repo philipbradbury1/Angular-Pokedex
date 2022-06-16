@@ -12,6 +12,7 @@ import { NamePanelComponent } from './pokedex/name-panel/name-panel.component';
 import { BottomScreenComponent } from './pokedex/bottom-screen/bottom-screen.component';
 import { DPadComponent } from './pokedex/d-pad/d-pad.component';
 import { SearchPadComponent } from './pokedex/search-pad/search-pad.component';
+import { ImageButtonsComponent } from './pokedex/image-buttons/image-buttons.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SearchPadComponent } from './pokedex/search-pad/search-pad.component';
     NamePanelComponent,
     BottomScreenComponent,
     DPadComponent,
-    SearchPadComponent
+    SearchPadComponent,
+    ImageButtonsComponent
   ],
   imports: [
     BrowserModule,

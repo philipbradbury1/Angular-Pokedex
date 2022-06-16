@@ -17,7 +17,8 @@ export interface Description {
 }
 
 export interface Sprites {
-  front_default: string
+  front_default: string,
+  back_default: string
 }
 
 export interface Types {

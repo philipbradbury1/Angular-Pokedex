@@ -2,20 +2,23 @@
 
   <div class="pokedex">
     <ul *ngIf="!pokemonService.pokemonGenSelected " >
-
       <li *ngFor="let gen of (gens$ | async)"> <a (click)="getPokemonByGen(gen)">{{gen.name}}</a></li>
     </ul>
 
     <ul *ngIf="!pokemonService.pokemonSelected  && pokemonService.pokemonGenSelected == true" >
      <li *ngFor="let character of (pokemonList$ | async)"> <a (click)="getPokemonByName(character.name)">{{character.name}}</a></li>
     </ul>
-
   </div>
 
   <ng-container *ngIf="pokemon$ | async as pokemon" >
-    <div id="picture-row">
-     <img id="picture" src="{{pokemon.sprites.front_default}}">
+    <div id="picture-row" *ngIf="pokemonShowBack else front">
+     <img id="picture" src="{{pokemon.sprites.back_default}}">
     </div>
+    <ng-template #front>
+      <div id="picture-row" >
+        <img id="picture" src="{{pokemon.sprites.front_default}}">
+      </div>
+     </ng-template>
     <div id="screen-row-info">
       <div id="number-pokemon">{{pokemon.id}}</div>
     <!-- <div id="gender-container">

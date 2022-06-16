@@ -1,0 +1,8 @@
+<div id="buttons-container">
+  <div id="button-red" (click)="frontImage()">
+    <div id="light-button-red" class="light " [ngClass]="pokemonShowBack ? 'off' : 'on'"></div>
+  </div>
+  <div id="button-blue" (click)="backImage()">
+    <div id="light-button-blue" class="light "  [ngClass]="pokemonShowBack ? 'on' : 'off'"></div>
+  </div>
+</div>
