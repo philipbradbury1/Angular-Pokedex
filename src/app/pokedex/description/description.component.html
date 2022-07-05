@@ -1,13 +1,14 @@
 <div id="screen-description-row">
   <div id="screen-description" >
-
-    <div *ngIf="pokemon2$ | async as pokemon; else search_instructions">
+    <div *ngIf=" showSearch$ && pokemonDescription$  as pokemon; ">
       <span >
          {{pokemon}}
       </span>
     </div>
 
-    <ng-template #search_instructions>Search for pokemon by ID...</ng-template>
+    <div *ngIf=" !showSearch$ && (searchId$ | async )  as id; " >
+      <div>Search for pokemon by ID.... <span> {{ id }} </span></div>
+    </div>
 
   </div>
 </div>

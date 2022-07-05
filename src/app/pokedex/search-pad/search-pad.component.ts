@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { PokemonService } from 'src/app/_services/pokemon.service';
 
 @Component({
@@ -19,25 +19,28 @@ export class SearchPadComponent implements OnInit {
   ngOnInit(): void {
 
     this.subject.pipe(
-      debounceTime(500)
+      debounceTime(7000)
     ).subscribe(numberBtn => {
       this.heandleSearch(numberBtn);
+      //this.pokemonService.userCanSearch$.next(true);
     });
 
   }
 
-
-
   clickNumber(numberBtn: string){
-    console.log('clicked number')
 
     this.keypadInput = this.keypadInput + numberBtn;
 
-    if( this.keypadInput.length > 3){
+    /*if( this.keypadInput.length > 3){
 
-    }
+    }*/
+
+    this.pokemonService.setSearchId(numberBtn);
 
     this.subject.next(this.keypadInput);
+
+    //this.pokemonService.userCanSearch$.next(false);
+
   }
 
 
@@ -45,27 +48,11 @@ export class SearchPadComponent implements OnInit {
   heandleSearch(numberBtn: string){
 
     console.log('called', numberBtn)
-
-  /*  if(this.keypadInput.length < 3){
-      this.keypadInput = this.keypadInput + numberBtn;
-
-      if(this.keypadInput.length == 3){
-
-
-
-      }
-
-    }*/
-
     this.runSearch('keypad');
-
-  //  console.log(this.keypadInput)
 
   }
 
   runSearch(string:string){
-
-   // console.log('run search ran', string )
 
     this.pokemonService.getPokemonByName(parseInt(this.keypadInput)).subscribe();
     this.pokemonService.pokemonGenSelected = true;
@@ -76,3 +63,5 @@ export class SearchPadComponent implements OnInit {
   }
 
 }
+
+

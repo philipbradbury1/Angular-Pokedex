@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Pokemon } from 'src/app/_model/pokemon';
 import { PokemonService } from 'src/app/_services/pokemon.service';
 
@@ -11,24 +11,26 @@ import { PokemonService } from 'src/app/_services/pokemon.service';
 })
 export class DescriptionComponent implements OnInit {
 
-  pokemon2$?: Observable<Pokemon | null>;
+  showSearch$?: boolean;
 
-  constructor(private pokemonService: PokemonService) { }
+  searchId$?: Observable<string>;
+
+  pokemonDescription$?: Pokemon;
+
+  constructor(public pokemonService: PokemonService) { }
 
   ngOnInit(): void {
 
-    this.pokemon2$ = this.pokemonService.pokemonList$
-    .pipe(
-      map(item =>{
-        if(item){
-          for (let flavor of item.flavor_text_entries){
-            if(flavor.language.name == 'en'){
-              return flavor.flavor_text;
-            }
-          }
-      }
-      }),
-    )
+    this.searchId$ = this.pokemonService.getSearchId();
+
+    this.pokemonService.getPokemonDescription().subscribe(res => {
+      this.pokemonDescription$ = res;
+    });
+
+    this.pokemonService.userCanSearch$.subscribe(res => {
+      console.log('bool', res)
+      this.showSearch$ = res;
+    })
 
   }
 

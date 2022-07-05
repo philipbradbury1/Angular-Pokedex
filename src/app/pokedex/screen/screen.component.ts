@@ -42,6 +42,7 @@ export class ScreenComponent implements OnInit {
 
   get pokemonShowBack(): boolean{
     return this.pokemonService.pokemonBack
+
   }
 
 }

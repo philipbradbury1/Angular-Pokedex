@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { PokemonList } from '../_model/pokemonList';
 import { PokemonResults } from '../_model/pokemonResults';
 import { Description, Pokemon } from '../_model/pokemon';
@@ -11,14 +11,24 @@ import { Description, Pokemon } from '../_model/pokemon';
   providedIn: 'root'
 })
 export class PokemonService {
+
   baseUrl = environment.apiUrl;
 
   private pokemonListSubject = new BehaviorSubject<any>(null);
   pokemonList$: Observable<any> = this.pokemonListSubject.asObservable();
 
+  searchId$ = new BehaviorSubject<string>('0');
+
+  private userCanSearch = new BehaviorSubject<boolean>(false);
+  userCanSearch$  = this.userCanSearch.asObservable();
+
   pokemonSelected:boolean = false;
+
   pokemonGenSelected:boolean = false;
+
   pokemonBack: boolean = false;
+
+  keyInput: string[] = ['0','0','0'];
 
   constructor(private http: HttpClient) { }
 
@@ -47,11 +57,6 @@ export class PokemonService {
     );
   }
 
-
-  setToNull(){
-    this.pokemonListSubject.next(null)
-  }
-
   getPokemonList(limit:number, offset:number): Observable<PokemonList[]>{
     return this.http.get<PokemonResults>(this.baseUrl + `pokemon/?limit= ${limit}&offset=${offset}`)
       .pipe(
@@ -59,7 +64,50 @@ export class PokemonService {
       );
   }
 
+  getPokemonDescription(): Observable<Pokemon>{
+    return this.pokemonList$.pipe(
+      map(item => {
+
+        if(item){
+          this.keyInput = ['0','0','0'];
+          console.log('item',item);
+          this.userCanSearch.next(true);
+          for (let flavor of item.flavor_text_entries){
+            if(flavor.language.name == 'en'){
+              return flavor.flavor_text;
+            }
+          }
+        }
+      })
+    )
+  }
+
+  getSearchId(): Observable<string>{
+    return this.searchId$.pipe(
+      map( res => {
+        console.log('res', res)
+        if(res){
+          this.userCanSearch.next(false);
+        }
+        if(this.keyInput.length >= 3){
+          this.keyInput.shift();
+        }
+          this.keyInput.push(res);
+          return this.keyInput.join('')
+      })
+    );
+  }
+
+  retriveSearchID(numberBtn:any){
+    return this.searchId$ = numberBtn;
+  }
+
+  setSearchId(res:any){
+    this.searchId$.next(res);
+  }
+
+  setToNull(){
+    this.pokemonListSubject.next(null)
+  }
+
 }
-
-
-
