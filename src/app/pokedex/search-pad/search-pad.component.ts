@@ -22,7 +22,6 @@ export class SearchPadComponent implements OnInit {
       debounceTime(7000)
     ).subscribe(numberBtn => {
       this.heandleSearch(numberBtn);
-      //this.pokemonService.userCanSearch$.next(true);
     });
 
   }
@@ -39,11 +38,12 @@ export class SearchPadComponent implements OnInit {
 
     this.subject.next(this.keypadInput);
 
-    //this.pokemonService.userCanSearch$.next(false);
+    this.pokemonService.pokemonGenSelected = false;
+    this.pokemonService.pokemonSelected = true;
+
+    this.pokemonService.searchGenerated = true;
 
   }
-
-
 
   heandleSearch(numberBtn: string){
 

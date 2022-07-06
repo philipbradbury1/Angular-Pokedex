@@ -22,11 +22,14 @@ export class PokemonService {
   private userCanSearch = new BehaviorSubject<boolean>(false);
   userCanSearch$  = this.userCanSearch.asObservable();
 
+  private pokemonShowBackImage = new BehaviorSubject<boolean>(false);
+  pokemonShowBackImage$ = this.pokemonShowBackImage.asObservable();
+
   pokemonSelected:boolean = false;
 
   pokemonGenSelected:boolean = false;
 
-  pokemonBack: boolean = false;
+  searchGenerated:boolean = false;
 
   keyInput: string[] = ['0','0','0'];
 
@@ -104,6 +107,14 @@ export class PokemonService {
 
   setSearchId(res:any){
     this.searchId$.next(res);
+  }
+
+  setSearch(value: boolean){
+    this.userCanSearch.next(value);
+  }
+
+  setBackImage(value: boolean){
+    this.pokemonShowBackImage.next(value);
   }
 
   setToNull(){

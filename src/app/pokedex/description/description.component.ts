@@ -28,7 +28,6 @@ export class DescriptionComponent implements OnInit {
     });
 
     this.pokemonService.userCanSearch$.subscribe(res => {
-      console.log('bool', res)
       this.showSearch$ = res;
     })
 

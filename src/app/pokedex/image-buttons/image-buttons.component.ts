@@ -9,22 +9,20 @@ import { PokemonService } from 'src/app/_services/pokemon.service';
 })
 export class ImageButtonsComponent implements OnInit {
 
+  pokemonShowBack: boolean = false;
+
   constructor(private pokemonService: PokemonService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  frontImage(){
-    this.pokemonService.pokemonBack = false;
-  }
+    frontImage(){
+      this.pokemonShowBack = false;
+      this.pokemonService.setBackImage(false)
+    }
 
-  backImage(){
-    this.pokemonService.pokemonBack = true;
-  }
-
-  get pokemonShowBack(): boolean{
-    console.log('get fired on');
-    return this.pokemonService.pokemonBack
-  }
+    backImage(){
+      this.pokemonShowBack = true;
+      this.pokemonService.setBackImage(true);
+    }
 
 }

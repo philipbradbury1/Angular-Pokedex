@@ -22,11 +22,21 @@ export class BottomScreenComponent implements OnInit {
 
   goBackButton(){
 
-    if(this.pokemonService.pokemonSelected == true){
+    if(this.pokemonService.searchGenerated){
       this.pokemonService.setToNull();
+      this.pokemonService.setSearch(false);
+      this.pokemonService.pokemonSelected = false;
+      this.pokemonService.pokemonGenSelected = false;
+
+
+    } else if(this.pokemonService.pokemonSelected){
+      console.log(1)
+      this.pokemonService.setToNull();
+      this.pokemonService.setSearch(false);
       this.pokemonService.pokemonSelected = false;
     }else{
-      console.log('remove list')
+      console.log(2)
+      this.pokemonService.setSearch(false);
       this.pokemonService.pokemonGenSelected = false;
     }
 

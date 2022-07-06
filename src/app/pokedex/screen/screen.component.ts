@@ -18,6 +18,7 @@ export class ScreenComponent implements OnInit {
   gens$?: Observable<Gen[]>;
   pokemonList$?: Observable<PokemonList[]>;
   pokemon$?: Observable<Pokemon | null>;
+  pokemonShowBackImage$?: boolean;
 
   constructor(public pokemonService: PokemonService, private genService: GensService) {}
 
@@ -28,21 +29,25 @@ export class ScreenComponent implements OnInit {
 
     this.pokemon$ = this.pokemonService.pokemonList$
     .pipe(pokemonList => this.pokemon$ = pokemonList);
+
+    this.pokemonService.pokemonShowBackImage$.subscribe(res => {
+      this.pokemonShowBackImage$ = res
+    })
+
   }
 
   getPokemonByName(name: string){
     this.pokemonService.getPokemonByName(name).subscribe();
     this.pokemonService.pokemonSelected = true;
+    this.pokemonService.searchGenerated = false;
+
+    console.log('gen selected pokename', this.pokemonService.pokemonGenSelected)
   }
 
   getPokemonByGen(gen: Gen){
     this.pokemonList$ = this.pokemonService.getPokemonList(gen.limit, gen.offset);
     this.pokemonService.pokemonGenSelected = true;
-  }
-
-  get pokemonShowBack(): boolean{
-    return this.pokemonService.pokemonBack
-
+    this.pokemonService.searchGenerated = false;
   }
 
 }
